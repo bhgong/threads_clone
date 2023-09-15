@@ -1,0 +1,377 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:flutter_thread_clone/constants/gaps.dart';
+import 'package:flutter_thread_clone/constants/sizes.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+class NewPostScreen extends StatefulWidget {
+  const NewPostScreen({super.key});
+
+  @override
+  State<NewPostScreen> createState() => _NewPostScreenState();
+}
+
+class _NewPostScreenState extends State<NewPostScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      setState(() {
+        //you can do anything here
+      });
+    }
+    if (_scrollController.offset <=
+            _scrollController.position.minScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      setState(() {
+        //you can do anything here
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Sizes.size14),
+      ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          toolbarHeight: Sizes.size60,
+          leadingWidth: Sizes.size96 + Sizes.size40,
+          title: const Text(
+            "New thread",
+            style: TextStyle(
+              fontSize: Sizes.size20,
+            ),
+          ),
+          leading: GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: Container(
+              width: Sizes.size72,
+              height: Sizes.size72,
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size20,
+                vertical: Sizes.size20,
+              ),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(
+                  fontSize: Sizes.size20,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ),
+        ),
+        body: Stack(
+          children: [
+            Scrollbar(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Divider(
+                    height: 2,
+                    thickness: 1,
+                  ),
+                  Gaps.v10,
+                  Row(
+                    children: [
+                      Gaps.h20,
+                      const SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              top: 0,
+                              child: CircleAvatar(
+                                backgroundImage: AssetImage(
+                                  'lib/images/434x0w.jpg',
+                                ),
+                                radius: 25,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Gaps.h5,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: Sizes.size20,
+                        ),
+                        width: 250,
+                        height: 60,
+                        child: const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Porsche',
+                              style: TextStyle(
+                                fontSize: Sizes.size16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Gaps.h5,
+                            Expanded(
+                              child: TextField(
+                                maxLines: null,
+                                minLines: null,
+                                expands: true,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: "Start a thread...",
+                                  border: InputBorder.none,
+                                ),
+                                cursorHeight: Sizes.size20,
+                                showCursor: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Gaps.v10,
+                  IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Gaps.h40,
+                        VerticalDivider(
+                          color: Colors.grey.shade300,
+                          thickness: 3,
+                          width: 10,
+                        ),
+                        Gaps.h44,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.paperclip,
+                              color: Colors.grey.shade400,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 20,
+                          left: 40,
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage(
+                              'lib/images/434x0w.jpg',
+                            ),
+                            radius: 5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class NewPostScreen extends StatefulWidget {
+  const NewPostScreen({super.key});
+
+  @override
+  State<NewPostScreen> createState() => _NewPostScreenState();
+}
+
+class _NewPostScreenState extends State<NewPostScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      setState(() {
+        //you can do anything here
+      });
+    }
+    if (_scrollController.offset <=
+            _scrollController.position.minScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      setState(() {
+        //you can do anything here
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Sizes.size14),
+      ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          toolbarHeight: Sizes.size60,
+          leadingWidth: Sizes.size96 + Sizes.size40,
+          title: const Text(
+            "New thread",
+            style: TextStyle(
+              fontSize: Sizes.size20,
+            ),
+          ),
+          leading: GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: Container(
+              width: Sizes.size72,
+              height: Sizes.size72,
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size20,
+                vertical: Sizes.size20,
+              ),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(
+                  fontSize: Sizes.size20,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ),
+        ),
+        body: SizedBox(
+          width: size.width,
+          height: size.height,
+          child: Column(
+            children: [
+              const Divider(
+                thickness: 1,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size10,
+                ),
+                width: size.width,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Gaps.v16,
+                        Container(
+                          width: Sizes.size44,
+                          height: Sizes.size44,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey.shade400,
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              40,
+                            ),
+                          ),
+                          child: const CircleAvatar(
+                            backgroundImage: AssetImage("lib/images/cat.jpeg"),
+                            radius: 25,
+                          ),
+                        ),
+                        Gaps.v10,
+                        IntrinsicHeight(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Sizes.size10,
+                            ),
+                            width: Sizes.size24,
+                            child: Row(
+                              children: [
+                                VerticalDivider(
+                                  color: Colors.grey.shade300,
+                                  thickness: 3,
+                                  width: 10,
+                                ),
+                                Gaps.h10,
+                                FaIcon(
+                                  FontAwesomeIcons.paperclip,
+                                  color: Colors.grey.shade400,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Sizes.size14,
+                        vertical: Sizes.size20,
+                      ),
+                      width: size.width - Sizes.size80,
+                      height: Sizes.size96 + Sizes.size60,
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "everycat",
+                            style: TextStyle(
+                              fontSize: Sizes.size16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Expanded(
+                            child: TextField(
+                              maxLines: null,
+                              expands: true,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                hintText: "Start a thread...",
+                                border: InputBorder.none,
+                              ),
+                              cursorHeight: Sizes.size20,
+                              showCursor: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
