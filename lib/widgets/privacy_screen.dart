@@ -1,79 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
-import 'package:flutter_thread_clone/home_screen.dart';
 import 'package:flutter_thread_clone/utils.dart';
-import 'package:flutter_thread_clone/widgets/activity_screen.dart';
-import 'package:flutter_thread_clone/widgets/nav_tab.dart';
 import 'package:flutter_thread_clone/widgets/viewModel/dark_mode_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
-class PrivacyScreen extends StatefulWidget {
+class PrivacyScreen extends ConsumerWidget {
   static const String routeName = "privacy";
   static const String routeURL = "privacy";
   const PrivacyScreen({super.key});
 
-  @override
-  State<PrivacyScreen> createState() => _PrivacyScreenState();
-}
+  final bool _notification = false;
 
-class _PrivacyScreenState extends State<PrivacyScreen>
-    with SingleTickerProviderStateMixin {
-  bool _notification = false;
-  int _selectedIndex = 0;
-
-  final bool _isDark = false;
-
-  void _onChangedSwitch(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notification = newValue;
-    });
-  }
-
+  // void _onChangedSwitch(bool? newValue) {
   void _onBackButton(BuildContext context) {
     Navigator.of(context).pop();
   }
 
-  void _onTap(int idx) async {
-    switch (idx) {
-      case 0:
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
-            ),
-            (route) => false);
-        break;
-
-      case 3:
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ActivityScreen(),
-            ),
-            (route) => false);
-        break;
-    }
-    setState(() {
-      _selectedIndex = idx;
-    });
-
-    // context.read<DarkModeViewModel>().addListener(_onDarkModeChanged);
-
-    void _onDarkModeChanged() {
-      // if (!mounted) return;
-      // final darkMode = context.read<DarkModeViewModel>().darkMode;
-      // if (darkMode) {
-      //   setState(() {
-      //     ThemeData.dark();
-      //   });
-      // }
-    }
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDark = isDarkMode(context);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -116,7 +62,7 @@ class _PrivacyScreenState extends State<PrivacyScreen>
           children: [
             SwitchListTile(
               value: _notification,
-              onChanged: _onChangedSwitch,
+              onChanged: (value) => {}, //_onChangedSwitch,
               inactiveTrackColor: Colors.grey.shade400,
               activeColor: Colors.white,
               activeTrackColor:
@@ -131,10 +77,10 @@ class _PrivacyScreenState extends State<PrivacyScreen>
                 isListTile: false,
               ),
             ),
-            SwitchListTile(
-              value: context.watch<DarkModeViewModel>().darkMode,
+            SwitchListTile.adaptive(
+              value: ref.watch(darkModeProvider).isDark,
               onChanged: (value) =>
-                  context.read<DarkModeViewModel>().setDarkMode(value),
+                  ref.read(darkModeProvider.notifier).setDarkMode(value),
               inactiveTrackColor: Colors.grey.shade400,
               activeColor: Colors.white,
               activeTrackColor:
@@ -253,46 +199,6 @@ class _PrivacyScreenState extends State<PrivacyScreen>
             ),
           ],
         ),
-        // bottomNavigationBar: BottomAppBar(
-        //   child: Padding(
-        //     padding: const EdgeInsets.only(
-        //       bottom: Sizes.size32,
-        //       top: Sizes.size32,
-        //       left: Sizes.size24,
-        //       right: Sizes.size24,
-        //     ),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //       children: [
-        //         NavTab(
-        //           isSelected: _selectedIndex == 0,
-        //           icon: FontAwesomeIcons.house,
-        //           onTap: () => _onTap(0),
-        //         ),
-        //         NavTab(
-        //           isSelected: _selectedIndex == 1,
-        //           icon: FontAwesomeIcons.magnifyingGlass,
-        //           onTap: () => _onTap(1),
-        //         ),
-        //         NavTab(
-        //           isSelected: _selectedIndex == 2,
-        //           icon: FontAwesomeIcons.penToSquare,
-        //           onTap: () => _onTap(2),
-        //         ),
-        //         NavTab(
-        //           isSelected: _selectedIndex == 3,
-        //           icon: FontAwesomeIcons.heart,
-        //           onTap: () => _onTap(3),
-        //         ),
-        //         NavTab(
-        //           isSelected: _selectedIndex == 4,
-        //           icon: FontAwesomeIcons.user,
-        //           onTap: () => _onTap(4),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }

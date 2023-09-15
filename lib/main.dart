@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
 import 'package:flutter_thread_clone/router.dart';
 import 'package:flutter_thread_clone/widgets/repos/app_dark_mode_repo.dart';
@@ -13,28 +14,28 @@ void main() async {
   final repository = AppDarkModeRepository(preferences);
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => DarkModeViewModel(repository),
-        ),
+    ProviderScope(
+      overrides: [
+        darkModeProvider.overrideWith(
+          () => DarkModeViewModel(repository),
+        )
       ],
       child: const ThreadApp(),
     ),
   );
 }
 
-class ThreadApp extends StatelessWidget {
+class ThreadApp extends ConsumerWidget {
   const ThreadApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    final themeChanger = Provider.of<DarkModeViewModel>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeChanger = ref.watch(darkModeProvider);
     return MaterialApp.router(
       routerConfig: router,
       title: 'Thread Clone',
-      themeMode: themeChanger.themoMode,
+      themeMode: themeChanger.isDark ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
