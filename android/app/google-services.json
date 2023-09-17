@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "919276666715",
+    "firebase_url": "https://threads-clone-bhg-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "threads-clone-bhg",
+    "storage_bucket": "threads-clone-bhg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919276666715:android:3724a91abc8cd76277e47e",
+        "android_client_info": {
+          "package_name": "com.example.flutter_thread_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApbbvCpBXuqXbY-jJejxzXBp-H1640g-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

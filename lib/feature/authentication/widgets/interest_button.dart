@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/feature/screens/interests_screen.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../constants/sizes.dart';
+import '../../../../../constants/sizes.dart';
 
 class InterestButton extends StatefulWidget {
   const InterestButton({

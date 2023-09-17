@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
+
 import 'package:flutter_thread_clone/utils.dart';
 
 class SearchScreen extends StatefulWidget {

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
+import 'package:flutter_thread_clone/feature/screens/home_screen.dart';
+
 import 'package:flutter_thread_clone/utils.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/search_screen.dart';
 
 final tabs = [
   "All",
@@ -22,6 +25,7 @@ class ActivityScreen extends StatefulWidget {
 
 class _ActivityScreenState extends State<ActivityScreen>
     with TickerProviderStateMixin {
+  int _selectedIndex = 0;
   int _followIndex = 0;
   late TabController _tabController;
 
@@ -55,6 +59,36 @@ class _ActivityScreenState extends State<ActivityScreen>
     setState(() {
       _followIndex = index;
       _isFollow[_followIndex] = !_isFollow[_followIndex];
+    });
+  }
+
+  void _onTap(int idx) async {
+    switch (idx) {
+      case 0:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+            (route) => false);
+        break;
+      case 1:
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const SearchScreen(),
+            ),
+            (route) => false);
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Placeholder(),
+          ),
+        );
+        break;
+    }
+    setState(() {
+      _selectedIndex = idx;
     });
   }
 
@@ -299,6 +333,40 @@ class _ActivityScreenState extends State<ActivityScreen>
         ],
       ),
       subtitle: Text(subtitle),
+
+      // Text(subtitle),
+      // trailing: Container(
+      //   padding: const EdgeInsets.symmetric(
+      //     horizontal: Sizes.size24,
+      //     vertical: Sizes.size8,
+      //   ),
+      //   decoration: BoxDecoration(
+      //     color:
+      //         _isFollow[selectedIdx] ? Colors.blueGrey.shade300 : Colors.white,
+      //     border: Border.all(
+      //       width: 1,
+      //       color: _isFollow[selectedIdx]
+      //           ? Colors.blueGrey.shade300
+      //           : Colors.white,
+      //     ),
+      //     borderRadius: BorderRadius.circular(
+      //       10,
+      //     ),
+      //   ),
+      //   child: GestureDetector(
+      //     onTap: () => _onFollowTap(selectedIdx),
+      //     child: _isFollow[selectedIdx]
+      //         ? Text(
+      //             "Following",
+      //             style: TextStyle(
+      //               fontWeight: FontWeight.w500,
+      //               backgroundColor: Colors.blueGrey.shade300,
+      //               color: Colors.white,
+      //             ),
+      //           )
+      //         : const SizedBox(),
+      //   ),
+      // ),
     );
   }
 }

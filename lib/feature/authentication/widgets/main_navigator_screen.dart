@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/activity_screen.dart';
 import 'package:flutter_thread_clone/feature/authentication/widgets/nav_tab.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/new_post_screen.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/profile_screen.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/search_screen.dart';
 import 'package:flutter_thread_clone/feature/screens/home_screen.dart';
-import 'package:flutter_thread_clone/widgets/activity_screen.dart';
-import 'package:flutter_thread_clone/widgets/new_post_screen.dart';
-import 'package:flutter_thread_clone/widgets/profile_screen.dart';
-import 'package:flutter_thread_clone/widgets/search_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 

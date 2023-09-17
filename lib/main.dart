@@ -1,10 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/repos/app_dark_mode_repo.dart';
+import 'package:flutter_thread_clone/firebase_options.dart';
 import 'package:flutter_thread_clone/router.dart';
-import 'package:flutter_thread_clone/widgets/repos/app_dark_mode_repo.dart';
+
 import 'package:flutter_thread_clone/widgets/viewModel/dark_mode_view_model.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -12,6 +14,18 @@ void main() async {
 
   final preferences = await SharedPreferences.getInstance();
   final repository = AppDarkModeRepository(preferences);
+
+  await Firebase.initializeApp(
+    // name: "dev project",
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // if (Firebase.apps.isNotEmpty) {
+  //   await Firebase.initializeApp(
+  //       options: DefaultFirebaseOptions.currentPlatform);
+  // } else {
+  //   Firebase.app();
+  // }
 
   runApp(
     ProviderScope(
@@ -33,7 +47,7 @@ class ThreadApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeChanger = ref.watch(darkModeProvider);
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routeProvider),
       title: 'Thread Clone',
       themeMode: themeChanger.isDark ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
