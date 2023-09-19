@@ -20,13 +20,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // if (Firebase.apps.isNotEmpty) {
-  //   await Firebase.initializeApp(
-  //       options: DefaultFirebaseOptions.currentPlatform);
-  // } else {
-  //   Firebase.app();
-  // }
-
   runApp(
     ProviderScope(
       overrides: [

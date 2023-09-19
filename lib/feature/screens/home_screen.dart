@@ -3,11 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
 import 'package:flutter_thread_clone/utils.dart';
-import 'package:flutter_thread_clone/widgets/activity_screen.dart';
 import 'package:flutter_thread_clone/widgets/bottom_sheet.dart';
-import 'package:flutter_thread_clone/widgets/new_post_screen.dart';
-import 'package:flutter_thread_clone/widgets/search_screen.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -57,8 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool _showTitle = false;
 
-  int _selectedIndex = 0;
-
   void _onScroll() {
     if (_scrollController.offset > 100) {
       if (_showTitle) return;
@@ -84,45 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _onTap(int idx) async {
-    switch (idx) {
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const SearchScreen(),
-          ),
-        );
-        break;
-      case 3:
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ActivityScreen(),
-            ),
-            (route) => false);
-        break;
-      case 2:
-        await showModalBottomSheet(
-          isScrollControlled: true,
-          // showDragHandle: true,
-          useSafeArea: true,
-          clipBehavior: Clip.hardEdge,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              20,
-            ),
-          ),
-          context: context,
-          builder: (context) => const NewPostScreen(),
-        );
-        break;
-    }
-    setState(() {
-      _selectedIndex = idx;
-    });
   }
 
   void _onBottomTap(BuildContext context) async {

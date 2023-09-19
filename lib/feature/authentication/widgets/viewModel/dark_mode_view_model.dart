@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_thread_clone/widgets/dark_mode_model.dart';
-import 'package:flutter_thread_clone/widgets/repos/app_dark_mode_repo.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/dark_mode_model.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/repos/app_dark_mode_repo.dart';
 
 class DarkModeViewModel extends Notifier<DarkModeModel> {
   final AppDarkModeRepository _repository;
