@@ -68,27 +68,28 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     setState(() {});
   }
 
-  void _onEmailSubmit() {
-    if (_email.isEmpty || _isEmailVaild() != null) {
+  void _onSubmit() {
+    if (_email.isEmpty || _isEmailVaild() != null || !_isPassWordVaild()) {
       return;
     }
 
     ref.read(signUpForm.notifier).state = {
       "email": _email,
-    };
-  }
-
-  void _onPasswordSubmit() {
-    if (!_isPassWordVaild()) {
-      return;
-    }
-
-    final state = ref.read(signUpForm.notifier).state;
-    ref.read(signUpForm.notifier).state = {
-      ...state,
       "password": _password,
     };
   }
+
+  // void _onPasswordSubmit() {
+  //   if (!_isPassWordVaild()) {
+  //     return;
+  //   }
+
+  //   // final state = ref.read(signUpForm.notifier).state;
+  //   // ref.read(signUpForm.notifier).state = {
+  //   //   ...state,
+  //   //   "password": _password,
+  //   // };
+  // }
 
   @override
   void dispose() {
@@ -103,7 +104,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   }
 
   void _onNextTap() {
-    ref.read(signUpProvider.notifier).signUp();
+    _onSubmit();
+    ref.read(signUpProvider.notifier).signUp(context);
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
@@ -163,7 +165,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       autocorrect: false,
-                      onEditingComplete: _onEmailSubmit,
+                      onEditingComplete: _onSubmit,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
@@ -206,7 +208,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         child: TextFormField(
                           controller: _passwordController,
                           autocorrect: false, // 자동수정 기능
-                          onEditingComplete: _onPasswordSubmit,
+                          onEditingComplete: _onSubmit,
                           obscureText: _obscureText,
                           decoration: InputDecoration(
                             border: InputBorder.none,

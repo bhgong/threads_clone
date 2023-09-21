@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
-import 'package:flutter_thread_clone/feature/authentication/view_models/signup_view_model.dart';
+import 'package:flutter_thread_clone/feature/authentication/view_models/login_view_model.dart';
 import 'package:flutter_thread_clone/feature/authentication/widgets/form_button.dart';
+import 'package:flutter_thread_clone/feature/screens/home_screen.dart';
 import 'package:flutter_thread_clone/feature/screens/sign_up_screen.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,70 +22,23 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _mobileController = TextEditingController();
-
-  String _email = "";
-  String _mobile = "";
-
-  @override
-  void initState() {
-    super.initState();
-    _emailController.addListener(() {
-      setState(() {
-        _email = _emailController.text;
-      });
-    });
-    _mobileController.addListener(() {
-      setState(() {
-        _mobile = _mobileController.text;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _mobileController.dispose();
-    super.dispose();
-  }
 
   Map<String, String> formData = {};
   void _onSubmitTap() {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save(); //
+        ref
+            .read(loginProvider.notifier)
+            .login(formData["email"]!, formData["password"]!, context);
       }
     }
 
-    if (_email.isEmpty || _isEmailVaild() != null) return;
-    ref.read(signUpForm.notifier).state = {"email": _email};
-
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const SignUpScreen(),
+        builder: (context) => const HomeScreen(),
       ),
     );
-  }
-
-  String? _isEmailVaild() {
-    if (_email.isEmpty) return null;
-    final regExp = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (!regExp.hasMatch(_email)) {
-      return "Email not valid";
-    }
-    return null;
-  }
-
-  String? _isMobileVaild() {
-    if (_mobile.isEmpty) return null;
-    final regExp = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (!regExp.hasMatch(_mobile)) {
-      return "Mobile number not valid";
-    }
-    return null;
   }
 
   void _onSignUpTap(BuildContext context) {
@@ -144,11 +98,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     focusedBorder: InputBorder.none,
                   ),
                   validator: (value) {
-                    return "i don't like your email";
+                    if (value != null && value.isEmpty) {
+                      return "Plase write your email";
+                    }
+                    return null;
                   },
                   onSaved: (newValue) {
                     if (newValue != null) {
-                      formData['Email'] = newValue;
+                      formData['email'] = newValue;
                     }
                   },
                 ),
@@ -175,7 +132,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     hintText: 'Password',
                   ),
                   validator: (value) {
-                    return "wrong password";
+                    if (value != null && value.isEmpty) {
+                      return "Plase write your password";
+                    }
+                    return null;
                   },
                   onSaved: (newValue) {
                     if (newValue != null) {
@@ -187,9 +147,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Gaps.v28,
               GestureDetector(
                 onTap: _onSubmitTap,
-                child: const FormButton(
-                  // disabled: ref.watch(signUpProvider).isLoading,
-                  disabled: false,
+                child: FormButton(
+                  disabled: ref.watch(loginProvider).isLoading,
+                  // disabled: false,
                   text: "Log in",
                 ),
               ),

@@ -1,24 +1,29 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
-import 'package:flutter_thread_clone/widgets/camera_screen.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/camera_screen.dart';
+import 'package:flutter_thread_clone/feature/photo/view_models/photo_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class NewPostScreen extends StatefulWidget {
+class NewPostScreen extends ConsumerStatefulWidget {
   const NewPostScreen({super.key});
 
   @override
-  State<NewPostScreen> createState() => _NewPostScreenState();
+  ConsumerState<NewPostScreen> createState() => _NewPostScreenState();
 }
 
-class _NewPostScreenState extends State<NewPostScreen> {
+class _NewPostScreenState extends ConsumerState<NewPostScreen> {
   final ScrollController _scrollController = ScrollController();
 
+  bool _isValid = false;
+
   bool _isText = true;
-  late Image _image;
+  late XFile _image;
 
   Future<void> _onCameraTap(BuildContext context) async {
     final result = Navigator.of(context).push(
@@ -30,7 +35,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
     setState(() {
       if (result != null) {
         _isText = false;
-        _image = Image.file(File(result.toString()));
+        // _image = Image.file(File(result.toString()));
         print(_image);
       } else {
         return;
@@ -42,6 +47,16 @@ class _NewPostScreenState extends State<NewPostScreen> {
   void initState() {
     _scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  void onPostTap() {
+    // ref.read(photoProvider.notifier).uploadPhoto(photo)
+    if (_isText || _image != null) {
+      setState(() {
+        _isValid = true;
+      });
+    }
+    // 여기에서 홈스크린으로 이동할 수 있도록 하면 됨...ㅎㅎ 그때 홈스크린에서 띄워줄 수 있음
   }
 
   void _scrollListener() {
@@ -127,7 +142,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              subtitle: _isText
+              subtitle: _isText // 이부분 수정해야함...
                   ? const TextField(
                       maxLines: null,
                       keyboardType: TextInputType.text,
@@ -140,9 +155,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
                       width: size.width,
                       height: size.height * 0.2,
                       color: Colors.black,
-                      // child: Image.file(
-                      //   _image
-                      // ),
                     ),
               isThreeLine: true,
             ),
@@ -167,6 +179,17 @@ class _NewPostScreenState extends State<NewPostScreen> {
               ),
             )
           ],
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: TextButton(
+            onPressed: () => onPostTap,
+            child: Text(
+              "post",
+              style: TextStyle(
+                color: _isValid ? Colors.blue : Colors.grey.shade400,
+              ),
+            ),
+          ),
         ),
       ),
     );

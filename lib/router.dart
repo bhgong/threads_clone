@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_thread_clone/feature/authentication/repos/authentication_repo.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/setting_screen.dart';
 import 'package:flutter_thread_clone/feature/screens/login_screen.dart';
 import 'package:flutter_thread_clone/feature/screens/sign_up_screen.dart';
 import 'package:flutter_thread_clone/widgets/activity_screen.dart';
@@ -7,11 +8,12 @@ import 'package:flutter_thread_clone/widgets/main_navigator_screen.dart';
 import 'package:flutter_thread_clone/widgets/privacy_screen.dart';
 import 'package:flutter_thread_clone/widgets/profile_screen.dart';
 import 'package:flutter_thread_clone/widgets/search_screen.dart';
-import 'package:flutter_thread_clone/widgets/setting_screen.dart';
+
 import 'package:go_router/go_router.dart';
 
 final routeProvider = Provider(
   (ref) {
+    // ref.watch(authState);
     return GoRouter(
       initialLocation: "/home",
       redirect: (context, state) {

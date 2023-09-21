@@ -1,32 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
+import 'package:flutter_thread_clone/feature/authentication/repos/authentication_repo.dart';
 
 import 'package:flutter_thread_clone/feature/authentication/widgets/privacy_screen.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-class SettingScreen extends StatefulWidget {
+class SettingScreen extends ConsumerStatefulWidget {
   static const String routeName = "settings";
   static const String routeURL = "/settings";
   const SettingScreen({super.key});
 
   @override
-  State<SettingScreen> createState() => _SettingScreenState();
+  ConsumerState<SettingScreen> createState() => _SettingScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen> {
+class _SettingScreenState extends ConsumerState<SettingScreen> {
   void _onBackButton(BuildContext context) {
     Navigator.of(context).pop();
   }
 
   void _onPrivacyTap(BuildContext context) {
     context.goNamed(
-      // MaterialPageRoute(
-      //   builder: (context) => const PrivacyScreen(),
-      // ),
       PrivacyScreen.routeName,
     );
   }
@@ -142,7 +141,6 @@ class _SettingScreenState extends State<SettingScreen> {
             const Divider(
               thickness: 1,
             ),
-
             ListTile(
               title: const Text(
                 "Log out",
@@ -168,7 +166,10 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       CupertinoDialogAction(
                         isDestructiveAction: true,
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () {
+                          ref.read(authRepo).logOut();
+                          context.go("/");
+                        },
                         child: const Text(
                           "Yes",
                           style: TextStyle(color: Colors.blue),
@@ -179,30 +180,6 @@ class _SettingScreenState extends State<SettingScreen> {
                 );
               },
             ),
-            // GestureDetector(
-            //   onTap: ,
-            //   child: Container(
-            //     padding: const EdgeInsets.symmetric(
-            //       horizontal: Sizes.size14,
-            //       vertical: Sizes.size10,
-            //     ),
-            //     width: MediaQuery.of(context).size.width,
-            //     child: const Row(
-            //       children: [
-            //         Text(
-            //           "Log out",
-            //           style: TextStyle(
-            //             fontSize: Sizes.size20,
-            //             fontWeight: FontWeight.w500,
-            //             color: Color(0xFF4995DF),
-            //           ),
-            //         ),
-            //         Spacer(),
-
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

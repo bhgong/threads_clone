@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_thread_clone/constants/gaps.dart';
 import 'package:flutter_thread_clone/constants/sizes.dart';
+import 'package:flutter_thread_clone/feature/authentication/widgets/setting_screen.dart';
 import 'package:flutter_thread_clone/utils.dart';
-import 'package:flutter_thread_clone/widgets/setting_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
